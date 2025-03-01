@@ -51,7 +51,9 @@ Game 1	ABC123	https://example.com/game1.jpg
 Game 2	XYZ789	https://example.com/game2.jpg
 
 
+
 📌 Ensure the first row contains headers exactly as shown above!
+
 
 
 4️⃣ Configure Your Discord Bot
