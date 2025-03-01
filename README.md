@@ -22,10 +22,6 @@ The Game Code Redeemer is a Flask + Discord bot application that allows users to
     A Discord server where the bot will operate
     An Excel file (games.xlsx) containing game data.
 
-2️⃣ Clone the Repository
-git clone https://github.com/your-repo/game-code-redeemer.git
-cd game-code-redeemer
-
 2️⃣ Install Required Dependencies
 pip install flask pandas discord.py asyncio
 
