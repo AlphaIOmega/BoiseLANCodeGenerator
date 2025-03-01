@@ -24,20 +24,20 @@ The Game Code Redeemer is a Flask + Discord bot application that allows users to
 
 1️⃣ Prerequisites
 
-    Install Python 3.8+
+Install Python 3.8+
     
-    Install pip (Python package manager)
+Install pip (Python package manager)
     
-    A Discord bot token (See setup below)
+A Discord bot token (See setup below)
     
-    A Discord server where the bot will operate
+A Discord server where the bot will operate
     
-    An Excel file (games.xlsx) containing game data.
+An Excel file (games.xlsx) containing game data.
     
 
 2️⃣ Install Required Dependencies
 
-pip install flask pandas discord.py asyncio
+    pip install flask pandas discord.py asyncio
 
 
 3️⃣ Setup the games.xlsx File
@@ -58,53 +58,52 @@ Game 2	XYZ789	https://example.com/game2.jpg
 
 🔹 Step 1: Create a Discord Bot
 
-    Go to the Discord Developer Portal.
+Go to the Discord Developer Portal.
     
-    Click "New Application", name it, and go to "Bot" (left menu).
+Click "New Application", name it, and go to "Bot" (left menu).
     
-    Click "Add Bot", then "Reset Token" and copy the token.
+Click "Add Bot", then "Reset Token" and copy the token.
     
 
 🔹 Step 2: Enable Bot Permissions
    
-    Under "Privileged Gateway Intents", enable:
+Under "Privileged Gateway Intents", enable:
         
-        ✅ Presence Intent
+✅ Presence Intent
        
-        ✅ Server Members Intent
+✅ Server Members Intent
        
-        ✅ Message Content Intent
+✅ Message Content Intent
     
-    Save changes.
+Save changes.
 
 
 🔹 Step 3: Invite the Bot to Your Server
 
-    Go to OAuth2 > URL Generator.
+ Go to OAuth2 > URL Generator.
     
-    Under Scopes, select:
+Under Scopes, select:
     
-        ✅ bot
+ ✅ bot
         
-    Under Bot Permissions, select:
+ Under Bot Permissions, select:
     
-        ✅ Send Messages
+✅ Send Messages
         
-        ✅ Read Messages
+✅ Read Messages
         
-        ✅ View Channels
+✅ View Channels
         
-    Copy the generated URL and invite the bot to your server.
+Copy the generated URL and invite the bot to your server.
     
 
 5️⃣ Configure app.py
 
 Open app.py and update:
 
+    DISCORD_BOT_TOKEN = "YOUR_DISCORD_BOT_TOKEN"
 
-DISCORD_BOT_TOKEN = "YOUR_DISCORD_BOT_TOKEN"
-
-DISCORD_GUILD_ID = 123456789012345678  # Replace with your actual Discord server ID
+    DISCORD_GUILD_ID = 123456789012345678  # Replace with your actual Discord server ID
 
 
 📌 Running the Application
@@ -112,25 +111,25 @@ DISCORD_GUILD_ID = 123456789012345678  # Replace with your actual Discord server
 
 1️⃣ Start the Flask App
 
-python app.py
+    python app.py
 
 🔹 Flask should now be running on http://127.0.0.1:5000/
 
 2️⃣ How to Use
 
-    Open http://127.0.0.1:5000/ in your browser.
+Open http://127.0.0.1:5000/ in your browser.
     
-    Enter your Discord username.
+Enter your Discord username.
     
-    Click "Get New Game" to request a game.
+Click "Get New Game" to request a game.
     
-    The bot sends the game code via DM (not on the webpage).
+The bot sends the game code via DM (not on the webpage).
     
-    If you don’t like the game, click "I Don’t Want This Game" (up to 3 times).
+If you don’t like the game, click "I Don’t Want This Game" (up to 3 times).
     
-    After 3 rejections, the last rejected game is automatically assigned.
+After 3 rejections, the last rejected game is automatically assigned.
     
-    To start over, click "New User".
+To start over, click "New User".
     
 
 📌 API Endpoints
@@ -141,77 +140,81 @@ python app.py
 
 Request Example:
 
-curl -X POST -d "discord_name=TestUser" http://127.0.0.1:5000/get_game
+    curl -X POST -d "discord_name=TestUser" http://127.0.0.1:5000/get_game
 
 Response Example:
-{
-    "name": "Game 1",
-    "image": "https://example.com/game1.jpg",
-    "discord_name": "TestUser"
-}
+
+    {
+        "name": "Game 1",
+        "image": "https://example.com/game1.jpg",
+        "discord_name": "TestUser"
+    }
 
 🔹 /accept_game (POST)
 
 📌 Accepts the current game and sends the code via DM.
+
 Request Example:
 
-curl -X POST -d "discord_name=TestUser" http://127.0.0.1:5000/accept_game
+    curl -X POST -d "discord_name=TestUser" http://127.0.0.1:5000/accept_game
 
 Response Example:
 
-{
-    "success": "Game redeemed and sent to Discord!"
-}
+    {
+        "success": "Game redeemed and sent to Discord!"
+    }
 
 🔹 /reject_game (POST)
 
 📌 Rejects the current game (max 3 times).
+
 Request Example:
 
-curl -X POST -d "discord_name=TestUser" http://127.0.0.1:5000/reject_game
+    curl -X POST -d "discord_name=TestUser" http://127.0.0.1:5000/reject_game
 
 Response Example:
 
-{
-    "success": "Game rejected. You may request another game."
-}
+    {
+        "success": "Game rejected. You may request another game."
+    }
 
 🔹 /reset_user (POST)
 
 📌 Resets the user so they can redeem another game.
 Request Example:
 
-curl -X POST -d "discord_name=TestUser" http://127.0.0.1:5000/reset_user
+    curl -X POST -d "discord_name=TestUser" http://127.0.0.1:5000/reset_user
 
 Response Example:
 
-{
-    "success": "User reset. They can now request a game again."
-}
+    {
+        "success": "User reset. They can now request a game again."
+    }
 
 📌 Troubleshooting
+
 1️⃣ Flask Is Not Running
 
 ✅ Fix: Ensure you are in the correct directory and try:
 
-python app.py
+    python app.py
 
 2️⃣ Bot Is Not Sending DMs
 
 ✅ Fix: Ensure:
 
-    The bot is in your server.
-    You have enabled "Server Members Intent" in Discord Developer Portal.
-    The bot has permission to send DMs.
+The bot is in your server.
+You have enabled "Server Members Intent" in Discord Developer Portal.
+The bot has permission to send DMs.
 
 3️⃣ Game Codes Not Loading
 
 ✅ Fix:
 
-    Ensure games.xlsx exists in the project folder.
-    The first row should be:
+Ensure games.xlsx exists in the project folder.
+The first row should be:
 
-    | Game Name | Game Code | Game Image Link |
+| Game Name | Game Code | Game Image Link |
 
 📌 License
 
