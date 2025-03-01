@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Code Redeemer</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 20px; }
+        img { max-width: 300px; display: block; margin: 10px auto; }
+        h1, p { margin: 10px 0; }
+        button { padding: 10px 15px; font-size: 16px; cursor: pointer; margin: 5px; }
+        input { padding: 10px; font-size: 16px; margin: 10px; width: 250px; }
+        #error-message { color: red; font-weight: bold; display: none; }
+    </style>
+</head>
+<body>
+    <h1>Game Code Redeemer</h1>
+
+    <p>Enter your Discord username to redeem a game:</p>
+    <input type="text" id="discord_name" placeholder="Enter your Discord username">
+    <br>
+
+    <button id="get-game-btn" onclick="loadGame()">Get New Game</button>
+    <button id="reject-game-btn" onclick="rejectGame()" disabled>I Don't Want This Game</button>
+    <button id="accept-game-btn" onclick="acceptGame()" disabled>Accept Game</button>
+    <button id="reset-user-btn" onclick="resetUser()">New User</button>
+
+    <h2 id="game-title" style="display: none;"></h2>
+    <img id="game-image" src="" alt="Game Image" style="display: none;">
+    
+    <p id="error-message"></p>
+
+    <script>
+        let currentGameCode = "";
+
+        function loadGame() {
+            let discordName = document.getElementById("discord_name").value.trim();
+            if (!discordName) {
+                showError("Please enter your Discord username before requesting a game.");
+                return;
+            }
+
+            fetch("/get_game", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `discord_name=${encodeURIComponent(discordName)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    showError(data.error);
+                    return;
+                }
+
+                // Store the game code without displaying it
+                currentGameCode = data.code || "";
+
+                document.getElementById("game-title").innerText = data.name;
+                document.getElementById("game-image").src = data.image;
+                document.getElementById("game-title").style.display = "block";
+                document.getElementById("game-image").style.display = "block";
+
+                document.getElementById("reject-game-btn").disabled = false;
+                document.getElementById("accept-game-btn").disabled = false;
+                document.getElementById("error-message").style.display = "none";
+            })
+            .catch(error => {
+                console.error("❌ Fetch error:", error);
+                showError("Failed to fetch game data.");
+            });
+        }
+
+        function acceptGame() {
+            let discordName = document.getElementById("discord_name").value.trim();
+            if (!discordName) {
+                showError("No game to accept.");
+                return;
+            }
+
+            fetch("/accept_game", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `discord_name=${encodeURIComponent(discordName)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    showError(data.error);
+                    return;
+                }
+
+                alert("Game redeemed successfully! The code has been sent to your Discord DMs.");
+
+                document.getElementById("game-title").style.display = "none";
+                document.getElementById("game-image").style.display = "none";
+                document.getElementById("reject-game-btn").disabled = true;
+                document.getElementById("accept-game-btn").disabled = true;
+
+                // Automatically refresh the page after 3 seconds
+                setTimeout(() => {
+                    window.location.href = window.location.href;
+                }, 3000);
+
+            })
+            .catch(error => {
+                console.error("Fetch error:", error);
+                showError("Failed to redeem the game.");
+            });
+        }
+
+        function rejectGame() {
+            let discordName = document.getElementById("discord_name").value.trim();
+            if (!discordName) {
+                showError("No game to reject.");
+                return;
+            }
+
+            fetch("/reject_game", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `discord_name=${encodeURIComponent(discordName)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    showError(data.error);
+                    return;
+                }
+
+                document.getElementById("game-title").style.display = "none";
+                document.getElementById("game-image").style.display = "none";
+                document.getElementById("reject-game-btn").disabled = true;
+                document.getElementById("accept-game-btn").disabled = true;
+
+                loadGame();
+            })
+            .catch(error => {
+                console.error("Fetch error:", error);
+                showError("Failed to reject the game.");
+            });
+        }
+
+        function resetUser() {
+            let discordName = document.getElementById("discord_name").value.trim();
+            if (!discordName) {
+                showError("Please enter a username to reset.");
+                return;
+            }
+
+            fetch("/reset_user", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: `discord_name=${encodeURIComponent(discordName)}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    showError(data.error);
+                    return;
+                }
+
+                alert("User reset successfully. You may now request a game again.");
+                document.getElementById("get-game-btn").disabled = false;
+                document.getElementById("reject-game-btn").disabled = true;
+                document.getElementById("accept-game-btn").disabled = true;
+                document.getElementById("error-message").style.display = "none";
+
+                // Automatically refresh the page after resetting the user
+                setTimeout(() => {
+                    window.location.href = window.location.href;
+                }, 3000);
+            })
+            .catch(error => {
+                console.error("Fetch error:", error);
+                showError("Failed to reset user.");
+            });
+        }
+
+        function showError(message) {
+            let errorMsg = document.getElementById("error-message");
+            errorMsg.innerText = message;
+            errorMsg.style.display = "block";
+        }
+    </script>
+</body>
+</html>
