@@ -23,72 +23,122 @@ The Game Code Redeemer is a Flask + Discord bot application that allows users to
 📌 Installation Instructions
 
 1️⃣ Prerequisites
+
     Install Python 3.8+
+    
     Install pip (Python package manager)
+    
     A Discord bot token (See setup below)
+    
     A Discord server where the bot will operate
+    
     An Excel file (games.xlsx) containing game data.
+    
 
 2️⃣ Install Required Dependencies
+
 pip install flask pandas discord.py asyncio
 
+
 3️⃣ Setup the games.xlsx File
+
 Create an Excel file named games.xlsx in the project folder with three columns:
+
 Game Name	Game Code	Game Image Link
+
 Game 1	ABC123	https://example.com/game1.jpg
+
 Game 2	XYZ789	https://example.com/game2.jpg
+
 
 📌 Ensure the first row contains headers exactly as shown above!
 
+
 4️⃣ Configure Your Discord Bot
+
 🔹 Step 1: Create a Discord Bot
+
     Go to the Discord Developer Portal.
+    
     Click "New Application", name it, and go to "Bot" (left menu).
+    
     Click "Add Bot", then "Reset Token" and copy the token.
+    
 
 🔹 Step 2: Enable Bot Permissions
+   
     Under "Privileged Gateway Intents", enable:
+        
         ✅ Presence Intent
+       
         ✅ Server Members Intent
+       
         ✅ Message Content Intent
+    
     Save changes.
 
+
 🔹 Step 3: Invite the Bot to Your Server
+
     Go to OAuth2 > URL Generator.
+    
     Under Scopes, select:
+    
         ✅ bot
+        
     Under Bot Permissions, select:
+    
         ✅ Send Messages
+        
         ✅ Read Messages
+        
         ✅ View Channels
+        
     Copy the generated URL and invite the bot to your server.
+    
 
 5️⃣ Configure app.py
+
 Open app.py and update:
 
+
 DISCORD_BOT_TOKEN = "YOUR_DISCORD_BOT_TOKEN"
+
 DISCORD_GUILD_ID = 123456789012345678  # Replace with your actual Discord server ID
+
 
 📌 Running the Application
 
+
 1️⃣ Start the Flask App
+
 python app.py
 
 🔹 Flask should now be running on http://127.0.0.1:5000/
+
 2️⃣ How to Use
 
     Open http://127.0.0.1:5000/ in your browser.
+    
     Enter your Discord username.
+    
     Click "Get New Game" to request a game.
+    
     The bot sends the game code via DM (not on the webpage).
+    
     If you don’t like the game, click "I Don’t Want This Game" (up to 3 times).
+    
     After 3 rejections, the last rejected game is automatically assigned.
+    
     To start over, click "New User".
+    
 
 📌 API Endpoints
+
 🔹 /get_game (POST)
 
 📌 Requests a new game.
+
 Request Example:
 
 curl -X POST -d "discord_name=TestUser" http://127.0.0.1:5000/get_game
