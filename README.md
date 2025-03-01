@@ -6,11 +6,17 @@ The Game Code Redeemer is a Flask + Discord bot application that allows users to
 📌 Features
 
 ✅ Game Code Redeemer Web App (HTML + Flask backend)
+
 ✅ Discord bot integration (Sends game codes via DM)
+
 ✅ User verification (Checks if the user is in the server)
+
 ✅ Reject up to 3 games (Then auto-assigns last rejected code)
+
 ✅ Game codes are hidden on the webpage (Sent via DM only)
+
 ✅ Tracks user attempts (Prevents multiple redemptions)
+
 ✅ Auto-refresh the page after redemption or reset
 
 
