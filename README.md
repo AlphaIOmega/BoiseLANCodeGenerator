@@ -63,23 +63,23 @@ Access the Web App Open your browser and go to:
 
 ## Usage/Examples
 
-Enter Your Discord Username
-    Input your Discord name in the web interface.
+    Enter Your Discord Username
+        Input your Discord name in the web interface.
 
-View Game Suggestions
-    The app will display six games, each with an image, title, and synopsis.
+    View Game Suggestions
+        The app will display six games, each with an image, title, and synopsis.
 
-Select One or Two Games
-    Choose one or two games from the selection.
+    Select One or Two Games
+        Choose one or two games from the selection.
 
-Verify Discord Membership
-    The app checks if you belong to the specified Discord server.
+    Verify Discord Membership
+        The app checks if you belong to the specified Discord server.
 
-Receive a Discord Message
-    If valid, your selected games will be sent to you via Discord.
+    Receive a Discord Message
+        If valid, your selected games will be sent to you via Discord.
 
-Page Refresh for Privacy
-    The app automatically refreshes the page after submission.
+    Page Refresh for Privacy
+        The app automatically refreshes the page after submission.
 
 
 ## Project Structure
