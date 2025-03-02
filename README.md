@@ -35,7 +35,7 @@ Setup Instructions
 
 Clone the Repository
 
-    git clone https://github.com/AlphaIOmega/   BoiseLANCodeGenerator.git
+    git clone https://github.com/AlphaIOmega/BoiseLANCodeGenerator.git
     cd BoiseLANCodeGenerator
 
 Install Dependencies
