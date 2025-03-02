@@ -5,6 +5,8 @@ BoiseLANCodeGenerator is a Flask-based web application designed for Boise LAN ev
 
 This project includes web scraping tools that collect and cache game images and synopsis data from external sources, which are later used for the web app.
 
+This project was written by ChatGPT/AlphaIOmega. The future is now old man.
+
 
 ## Features
 
